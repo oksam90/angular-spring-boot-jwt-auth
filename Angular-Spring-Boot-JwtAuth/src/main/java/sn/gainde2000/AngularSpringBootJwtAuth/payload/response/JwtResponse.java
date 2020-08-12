@@ -2,6 +2,7 @@ package sn.gainde2000.AngularSpringBootJwtAuth.payload.response;
 
 import java.util.List;
 
+//class qui définit le payload de réponse JWTresponse
 public class JwtResponse {
 	
 	private String token;

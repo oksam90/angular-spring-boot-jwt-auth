@@ -13,6 +13,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import sn.gainde2000.AngularSpringBootJwtAuth.models.User;
 
+// la classe UserDetailsImpl implément l'interface UserDetails pour obtenir toutes nos données
+
 public class UserDetailsImpl implements UserDetails{
 
 	private static final long serialVersionUID = 1L;

@@ -19,6 +19,9 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import sn.gainde2000.AngularSpringBootJwtAuth.security.services.UserDetailsServiceImpl;
 
+/*
+ * la classe AuthTokenFilter éntend OncePerRequestFilter et remplace la méthode doFilterInternal
+ * et s'execute une fois par requête*/
 public class AuthTokenFilter extends OncePerRequestFilter{
 	
 	@Autowired
@@ -27,8 +30,18 @@ public class AuthTokenFilter extends OncePerRequestFilter{
 	@Autowired
 	private UserDetailsServiceImpl userDetailsService;
 
+	//Journalisation de la class AuthTokenFilter 
 	private static final Logger logger = LoggerFactory.getLogger(AuthTokenFilter.class);
 
+	
+	/*
+	 * dans le doFilterInternal:
+	 * obtenir jwt de l'en-tête d'autorisation(en supprimant le préfixe Bearer)
+	 * Si la requête a JWT validez-la, analysez le nom d'utilisateur à partir de celle-ci
+	 * à partir du nom d'utilisateur, récupérer UserDatails pour créer un objet d'autehtification
+	 * Définir les UserDetails actuels dans SecurityContext à l'aide de la méthode setAuthentication (authentification)
+	 * 
+	 * */
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {

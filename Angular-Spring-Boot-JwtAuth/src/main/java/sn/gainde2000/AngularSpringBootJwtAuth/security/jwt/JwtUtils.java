@@ -16,6 +16,12 @@ import io.jsonwebtoken.SignatureException;
 import io.jsonwebtoken.UnsupportedJwtException;
 import sn.gainde2000.AngularSpringBootJwtAuth.security.services.UserDetailsImpl;
 
+/*
+ * la classe utilitaire JwtUtils
+ * générer un JWT à partir du nom d'utilisateur, de la date, de l'expiration dun secret
+ * Obtenir le nom d'utilisateur de JWT
+ * valider un JWT
+ * */
 @Component
 public class JwtUtils {
 	

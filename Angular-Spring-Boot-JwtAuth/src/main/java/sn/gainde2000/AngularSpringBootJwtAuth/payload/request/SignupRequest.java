@@ -1,5 +1,6 @@
 package sn.gainde2000.AngularSpringBootJwtAuth.payload.request;
 
+//class qui définit le payload de d'inscription
 import java.util.Set;
 
 import javax.validation.constraints.Email;

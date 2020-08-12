@@ -1,5 +1,6 @@
 package sn.gainde2000.AngularSpringBootJwtAuth.payload.response;
 
+//class qui définit le payload des messages
 public class MessageResponse {
 	
 	private String message;

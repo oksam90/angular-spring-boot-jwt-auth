@@ -19,16 +19,18 @@ import sn.gainde2000.AngularSpringBootJwtAuth.security.jwt.AuthTokenFilter;
 import sn.gainde2000.AngularSpringBootJwtAuth.security.services.UserDetailsServiceImpl;
 
 @Configuration
-@EnableWebSecurity
+@EnableWebSecurity //permet a spring de trouver et d'appliquer auto la class à la sécu web global
 @EnableGlobalMethodSecurity(
 							//securedEnabled = true,
 							//jsr250Enabled = true,
-							prePostEnabled = true)
+							prePostEnabled = true) // @EnableGlobalMethodSecurity fournit une sécurité AOP sur la méthode
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
+	
 	
 	@Autowired
 	UserDetailsServiceImpl userDetailsService;
 	
+	//Gestion des exceptions 
 	@Autowired
 	private AuthEntryPointJwt unauthorizedHandler;
 	
@@ -37,21 +39,28 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 		return new AuthTokenFilter();
 	}
 	
+	/*
+	 * pour que spring sécurité les détails du user pour effectuer l'auth et l'autorisation
+	 * on doit implémenter l'interface UserDetailsService, il sera utiliser pour congufirer DaoAuthticationProvider
+	 * par la méthode authenticationManagerBuilder.userDetailsService
+	 * */
 	@Override
 	public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
 		authenticationManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
 	}
 	
+	@Bean
 	public AuthenticationManager authenticationManangerBean() throws Exception {
 		return super.authenticationManagerBean();
 	}
 	
+	//pour le cryptage du mot de passe, on évite qu'il soit du text Brute
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
 	
-	
+	//Configuration de cors et csrf pour exiger l'auth des users ou pas
 	protected void configure(HttpSecurity http) throws Exception {
 		http.cors().and().csrf().disable()
 			.exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()

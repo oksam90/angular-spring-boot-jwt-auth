@@ -2,6 +2,7 @@ package sn.gainde2000.AngularSpringBootJwtAuth.payload.request;
 
 import javax.validation.constraints.NotBlank;
 
+//class qui définit le payload de connextion
 public class LoginRequest {
 	
 	@NotBlank

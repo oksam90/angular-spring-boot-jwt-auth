@@ -32,7 +32,9 @@ import sn.gainde2000.AngularSpringBootJwtAuth.repository.RoleRepository;
 import sn.gainde2000.AngularSpringBootJwtAuth.repository.UserRepository;
 import sn.gainde2000.AngularSpringBootJwtAuth.security.jwt.JwtUtils;
 import sn.gainde2000.AngularSpringBootJwtAuth.security.services.UserDetailsImpl;
-
+/*
+ * Ce contrôleur fournir les api pour les actions d'enrégistrement et de connexion
+ * */
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/auth")
@@ -53,6 +55,13 @@ public class AuthController {
 	@Autowired
 	JwtUtils jwtUtils;
 
+	/*
+	 * authentifier {username and password}
+	 * met à jour SecurityContext à l'aide de l'objet d'authentification
+	 * génère JWT
+	 * obtenir un UserDetails à partir de l'objet d'authentification
+	 * La réponse contient des données JWT et UserDetails
+	 * */
 	@PostMapping("/signin")
 	public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
@@ -74,6 +83,11 @@ public class AuthController {
 												 roles));
 	}
 
+	/*
+	 * Vérifie si username et email existe
+	 * crée un nouveau User (avec ROLE_USER sinon spécifier le rôle)
+	 * enrigistre le User dans la base de données en utilisant UserRepository
+	 * */
 	@PostMapping("/signup")
 	public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
 		if (userRepository.existsByUsername(signUpRequest.getUsername())) {
@@ -85,7 +99,7 @@ public class AuthController {
 		if (userRepository.existsByEmail(signUpRequest.getEmail())) {
 			return ResponseEntity
 					.badRequest()
-					.body(new MessageResponse("Error: Email is already in use!"));
+					.body(new MessageResponse("Erreur: l'e-mail est déjà utilisé!"));
 		}
 
 		// Créer un nouveau compte utilisateur
@@ -126,7 +140,7 @@ public class AuthController {
 		user.setRoles(roles);
 		userRepository.save(user);
 
-		return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+		return ResponseEntity.ok(new MessageResponse("L'utilisateur s'est enregistré avec succès!"));
 	}
 
 }
