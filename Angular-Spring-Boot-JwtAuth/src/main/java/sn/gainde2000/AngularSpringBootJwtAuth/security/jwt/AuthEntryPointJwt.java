@@ -29,7 +29,7 @@ public class AuthEntryPointJwt implements AuthenticationEntryPoint {
 			AuthenticationException authException) throws IOException, ServletException {
 		logger.error("Erreur non autorisée: {}", authException.getMessage());
 		/*
-		 * HttpServletResponse.SC_UNAUTHORIZED affcihe le coded'état 401
+		 * HttpServletResponse.SC_UNAUTHORIZED affacihe le coded'état 401
 		 * il indique que la demande nécessite une authentification HTTP
 		 * */
 		response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Erreur: non autorisé");
